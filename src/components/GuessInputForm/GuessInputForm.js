@@ -9,7 +9,7 @@ function GuessInputForm({ onSubmit }, ref) {
         name="guessInput"
         type="text"
         required
-        pattern="\w{5,5}"
+        pattern="[A-Za-z]{5}"
         title="5 letter word"
       />
     </form>
