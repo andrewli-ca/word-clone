@@ -6,15 +6,22 @@ import EndGameBanner from '../EndGameBanner';
 import GuessInputForm from '../GuessInputForm';
 import GuessResults from '../GuessResults';
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [resetGameKey, setResetGameKey] = React.useReducer((r) => r + 1, 0);
+
+  return <GameMain key={resetGameKey} resetGame={setResetGameKey} />;
+}
+
+function GameMain({ resetGame }) {
   const formRef = React.useRef(null);
+
+  const [answer] = React.useState(() => sample(WORDS));
   const [guesses, setGuesses] = React.useState([]);
+
   const [status, setStatus] = React.useState('running');
+
+  // To make debugging easier, we'll log the solution in the console.
+  console.info({ answer });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +60,7 @@ function Game() {
         status={status}
         numGuesses={guesses.length}
         answer={answer}
+        action={<button onClick={resetGame}>Restart Game</button>}
       />
     </div>
   );

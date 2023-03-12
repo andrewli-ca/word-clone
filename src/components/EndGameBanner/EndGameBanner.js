@@ -27,7 +27,7 @@ function HappyBanner({ numGuesses, action }) {
 
 function SadBanner({ answer, action }) {
   return (
-    <Banner className="happy">
+    <Banner className="happy" action={action}>
       <p>
         Sorry, the correct answer is <strong>{answer}</strong>.
       </p>
