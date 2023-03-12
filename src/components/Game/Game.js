@@ -1,8 +1,10 @@
 import React from 'react';
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { WORDS } from '../../data';
 import { sample } from '../../utils';
-import GuessResults from '../GuessResults';
+import EndGameBanner from '../EndGameBanner';
 import GuessInputForm from '../GuessInputForm';
+import GuessResults from '../GuessResults';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -12,22 +14,46 @@ console.info({ answer });
 function Game() {
   const formRef = React.useRef(null);
   const [guesses, setGuesses] = React.useState([]);
+  const [status, setStatus] = React.useState('running');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const currentGuess = e.target['guessInput'].value.toUpperCase();
-    console.log({ guess: currentGuess });
+    const nextGusesses = [...guesses, currentGuess];
 
-    setGuesses((prevGuesses) => [...prevGuesses, currentGuess]);
+    setGuesses(nextGusesses);
 
-    formRef.current.elements['guessInput'].value = '';
+    const inputFieldElement = formRef.current.elements['guessInput'];
+    inputFieldElement.value = '';
+
+    if (currentGuess === answer) {
+      setStatus('won');
+      inputFieldElement.disabled = true;
+    }
+
+    if (
+      currentGuess !== answer &&
+      nextGusesses.length === NUM_OF_GUESSES_ALLOWED
+    ) {
+      setStatus('lost');
+      inputFieldElement.disabled = true;
+    }
   };
 
   return (
     <div>
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInputForm ref={formRef} onSubmit={handleSubmit} />
+      <GuessInputForm
+        ref={formRef}
+        onSubmit={handleSubmit}
+        disabled={status !== 'running'}
+      />
+      <EndGameBanner
+        status={status}
+        numGuesses={guesses.length}
+        answer={answer}
+      />
     </div>
   );
 }

@@ -13,3 +13,7 @@ export const range = (start, end, step = 1) => {
   }
   return output;
 };
+
+// https://stackoverflow.com/a/39835908/5323457
+export const pluralize = (count, noun, suffix = 's') =>
+  `${count} ${noun}${count !== 1 ? suffix : ''}`;

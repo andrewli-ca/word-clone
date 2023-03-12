@@ -1,8 +1,13 @@
 import React from 'react';
 
-function GuessInputForm({ onSubmit }, ref) {
+function GuessInputForm({ onSubmit, disabled }, ref) {
   return (
-    <form ref={ref} className="guess-input-wrapper" onSubmit={onSubmit}>
+    <form
+      ref={ref}
+      className="guess-input-wrapper"
+      onSubmit={onSubmit}
+      disabled={disabled}
+    >
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
