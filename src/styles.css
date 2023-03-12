@@ -186,6 +186,21 @@ h1 {
   color: white;
 }
 
+.banner-action {
+  margin-top: 16px;
+}
+
+.banner-action button {
+  padding: 8px;
+  border: 2px solid white;
+  border-radius: 8px;
+}
+
+.banner-action button:hover {
+  background-color: white;
+  color: var(--color-gray-300);
+}
+
 .visually-hidden {
   position: absolute;
   overflow: hidden;
